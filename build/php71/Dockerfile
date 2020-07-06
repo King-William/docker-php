@@ -14,9 +14,12 @@ RUN if [ ${CHANGE_SOURCE} = true ]; then \
 # 更新、安装基础组件
 RUN apt-get update
 RUN apt-get install -y --no-install-recommends \
-    libpq-dev \
-    libjpeg62-turbo-dev ntpdate \
-    cron unzip
+#    libpq-dev \
+#    libjpeg62-turbo-dev ntpdate \
+#    cron unzip
+    procps libpq-dev libfreetype6-dev \
+    libjpeg62-turbo-dev libpng-dev  ntpdate \
+    cron vim unzip git wget libzip-dev
 
 
 
@@ -24,7 +27,10 @@ RUN apt-get install -y --no-install-recommends \
 # 安装 PHP 扩展
 ####################################################################################
 #RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
-RUN docker-php-ext-install pdo_mysql gettext bcmath
+#RUN docker-php-ext-install pdo_mysql gettext bcmath
+
+RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+RUN docker-php-ext-install gd pdo_mysql gettext bcmath zip
 
 #################### 方式一
 

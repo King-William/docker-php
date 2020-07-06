@@ -1,4 +1,3 @@
-##### 四季秀项目环境
 ###### DNMP（Docker + Nginx1.13.0 + PHP7.2.17 + Swoole4.2.9 + Phalcon3.2.4）
 
 - 增加redis集群
@@ -71,8 +70,7 @@ web
 ###### 傻瓜式一键安装
 
 ```
-git clone https://gitlab.sijishows.cn/wuyihao/docker-php-environment.git
-mv docker-php-environment web
+git clone https://github.com/King-William/dockerfile.git
 
 # 配置项目目录、端口
 vim .env
