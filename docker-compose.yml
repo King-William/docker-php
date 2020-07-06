@@ -29,6 +29,7 @@ services:
         - "9005:9005"
       volumes:
         - ${GLOBAL_APP_PATH}/www:/var/www
+        - ${GLOBAL_APP_PATH}/components/phalcon:/usr/local/lib/php/extensions/no-debug-non-zts-20170718/phalconVersion
         - ${GLOBAL_APP_PATH}/components/php71/log:/var/log
         - ${GLOBAL_APP_PATH}/components/php71/conf.d/php.ini:/usr/local/etc/php/php.ini
         - ${GLOBAL_APP_PATH}/components/php71/conf.d/fpm/www.conf:/usr/local/etc/php-fpm.d/www.conf
