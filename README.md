@@ -70,7 +70,7 @@ web
 ###### 傻瓜式一键安装
 
 ```
-git clone https://github.com/King-William/dockerfile.git
+git clone https://github.com/King-William/docker-php.git
 
 # 配置项目目录、端口
 vim .env
