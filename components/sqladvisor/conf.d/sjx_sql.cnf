@@ -1,0 +1,11 @@
+[sqladvisor]
+username=ro
+password=KTKC88Up19QHbOkbypjT6a4K1
+host=devdb.sijishows.com
+port=46001
+dbname=sjx_live
+sqls=select * from live where ids=1 limit 1;
+
+
+
+

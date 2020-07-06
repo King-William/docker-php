@@ -1,0 +1,11 @@
+[sqladvisor]
+username=ro
+password=KTKC88Up19QHbOkbypjT6a4K1
+host=devdb.yigeyougou.com
+port=16001
+dbname=sjx_video
+sqls=select * from video where id=1 limit 1;
+
+
+
+
