@@ -13,10 +13,8 @@ RUN if [ ${CHANGE_SOURCE} = true ]; then \
 
 # 更新、安装基础组件
 RUN apt-get update
-RUN apt-get install -y --no-install-recommends \
-#    libpq-dev \
-#    libjpeg62-turbo-dev ntpdate \
-#    cron unzip
+RUN apt-get install -y  --allow-remove-essential --allow-downgrades --no-install-recommends \
+    libncurses5 libncursesw5 libtinfo5 libz-dev  zlib1g=1:1.2.8.dfsg-5 \
     procps libpq-dev libfreetype6-dev \
     libjpeg62-turbo-dev libpng-dev  ntpdate \
     cron vim unzip git wget libzip-dev
@@ -26,11 +24,8 @@ RUN apt-get install -y --no-install-recommends \
 ####################################################################################
 # 安装 PHP 扩展
 ####################################################################################
-#RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
-#RUN docker-php-ext-install pdo_mysql gettext bcmath
-
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
-RUN docker-php-ext-install gd pdo_mysql gettext bcmath zip
+RUN docker-php-ext-install pdo_mysql gettext bcmath
 
 #################### 方式一
 
@@ -64,28 +59,6 @@ RUN tar -xvf /home/cphalcon.tgz -C /home \
 		&& cd /home/cphalcon-3.2.4/build \
 		&& ./install
 
-
-
-
-# GeoIp
-RUN apt-get install -y libgeoip-dev
-COPY geoip-1.1.1.tgz /home/geoip.tgz
-RUN tar -xvf /home/geoip.tgz -C /home \
-	&& cd /home/geoip-1.1.1 \
-	&& phpize \
-	&& ./configure \
-	&& make \
-	&& make install \
-	&& docker-php-ext-enable geoip
-
-RUN mkdir -p /usr/share/GeoIP
-ADD GeoLiteCity.dat /usr/share/GeoIP/GeoIPCity.dat
-
-
-# Xdebug
-COPY xdebug-2.6.0.tgz /home/xdebug.tgz
-RUN pecl install /home/xdebug.tgz \ 
-		&& docker-php-ext-enable xdebug
 
 
 # Redis
@@ -135,7 +108,3 @@ ENV ENV_PHP_VAR local
 #		&& docker-php-ext-enable geoip
 #RUN mkdir -p /usr/share/GeoIP
 #ADD GeoLiteCity.dat /usr/share/GeoIP/GeoIPCity.dat
-
-
-
-

@@ -36,106 +36,106 @@ services:
       networks:
         - net-web
 
-  ### rabbitmq #########################################
-
-  rabbitmq: # https://hub.docker.com/_/rabbitmq/
-    image: rabbitmq:3.7.7-management-alpine
-    hostname: myrabbitmq
-    ports:
-      - "5672:5672" # mq
-      - "15672:15672" # http://localhost:15672 账号 guess, 密码 guess
-    networks:
-      - net-web
-
-  ### redis集群 #########################################
-
-  redis_node1:
-    build:
-      context: ./build/redis_cluster/node
-    ports:
-      - 7001:6379
-    links:
-      - "php71"
-    networks:
-      - net-web
-
-  redis_node2:
-    build:
-      context: ./build/redis_cluster/node
-    ports:
-      - 7002:6379
-    links:
-      - "php71"
-    networks:
-      - net-web
-
-  redis_node3:
-    build:
-      context: ./build/redis_cluster/node
-    ports:
-      - 7003:6379
-    links:
-      - "php71"
-    networks:
-      - net-web
-
-  redis_node4:
-    build:
-      context: ./build/redis_cluster/node
-    ports:
-      - 7004:6379
-    links:
-      - "php71"
-    networks:
-      - net-web
-
-  redis_node5:
-    build:
-      context: ./build/redis_cluster/node
-    ports:
-      - 7005:6379
-    links:
-      - "php71"
-    networks:
-      - net-web
-
-  redis_node6:
-    build:
-      context: ./build/redis_cluster/node
-    ports:
-      - 7006:6379
-    links:
-      - "php71"
-    networks:
-      - net-web
-
-  ### Elasticsearch7 #########################################
-  elasticsearch:
-    build:
-      context: ./build/elasticsearch
-    ports:
-      - 9200:9200
-      - 9300:9300
-    volumes:
-      - ${GLOBAL_APP_PATH}/components/elasticsearch/conf.d/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-    networks:
-      - net-web
-
-  ### kibana #########################################
-  kibana:
-    build:
-      context: ./build/kibana
-    ports:
-      - 5601:5601
-    volumes:
-      - ${GLOBAL_APP_PATH}/components/kibana/conf.d/kibana.yml:/usr/share/kibana/config/kibana.yml
-    networks:
-      - net-web
-
-  ### sqladvisor #########################################
-  sqladvisor:
-    build:
-      context: ./build/sqladvisor
+#  ### rabbitmq #########################################
+#
+#  rabbitmq: # https://hub.docker.com/_/rabbitmq/
+#    image: rabbitmq:3.7.7-management-alpine
+#    hostname: myrabbitmq
+#    ports:
+#      - "5672:5672" # mq
+#      - "15672:15672" # http://localhost:15672 账号 guess, 密码 guess
+#    networks:
+#      - net-web
+#
+#  ### redis集群 #########################################
+#
+#  redis_node1:
+#    build:
+#      context: ./build/redis_cluster/node
+#    ports:
+#      - 7001:6379
+#    links:
+#      - "php71"
+#    networks:
+#      - net-web
+#
+#  redis_node2:
+#    build:
+#      context: ./build/redis_cluster/node
+#    ports:
+#      - 7002:6379
+#    links:
+#      - "php71"
+#    networks:
+#      - net-web
+#
+#  redis_node3:
+#    build:
+#      context: ./build/redis_cluster/node
+#    ports:
+#      - 7003:6379
+#    links:
+#      - "php71"
+#    networks:
+#      - net-web
+#
+#  redis_node4:
+#    build:
+#      context: ./build/redis_cluster/node
+#    ports:
+#      - 7004:6379
+#    links:
+#      - "php71"
+#    networks:
+#      - net-web
+#
+#  redis_node5:
+#    build:
+#      context: ./build/redis_cluster/node
+#    ports:
+#      - 7005:6379
+#    links:
+#      - "php71"
+#    networks:
+#      - net-web
+#
+#  redis_node6:
+#    build:
+#      context: ./build/redis_cluster/node
+#    ports:
+#      - 7006:6379
+#    links:
+#      - "php71"
+#    networks:
+#      - net-web
+#
+#  ### Elasticsearch7 #########################################
+#  elasticsearch:
+#    build:
+#      context: ./build/elasticsearch
+#    ports:
+#      - 9200:9200
+#      - 9300:9300
+#    volumes:
+#      - ${GLOBAL_APP_PATH}/components/elasticsearch/conf.d/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+#    networks:
+#      - net-web
+#
+#  ### kibana #########################################
+#  kibana:
+#    build:
+#      context: ./build/kibana
+#    ports:
+#      - 5601:5601
+#    volumes:
+#      - ${GLOBAL_APP_PATH}/components/kibana/conf.d/kibana.yml:/usr/share/kibana/config/kibana.yml
+#    networks:
+#      - net-web
+#
+#  ### sqladvisor #########################################
+#  sqladvisor:
+#    build:
+#      context: ./build/sqladvisor
 
 networks:
   net-web:
