@@ -54,11 +54,7 @@ RUN pecl install /home/swoole.tgz \
 
 
 #Phalcon
-COPY cphalcon-3.2.4.tgz /home/cphalcon.tgz
-RUN tar -xvf /home/cphalcon.tgz -C /home \
-		&& cd /home/cphalcon-3.2.4/build \
-		&& ./install
-
+COPY phalcon3.2.4.so /usr/local/lib/php/extensions/no-debug-non-zts-20170718/phalcon.so
 
 
 # Redis
@@ -69,13 +65,13 @@ RUN pecl install /home/redis.tgz \
 
 
 # Qconf
-#COPY qconf-1.2.1.tar.gz /home/qconf-1.2.1.tar.gz
-#COPY QConf-1.2.1_with_monitor-x86_64.tar.gz /home/QConf-1.2.1_with_monitor-x86_64.tar.gz
-#RUN tar -zxf /home/qconf-1.2.1.tar.gz && tar -zxf /home/QConf-1.2.1_with_monitor-x86_64.tar.gz -C /usr/local && mv /usr/local/qconf-1.2.1 /usr/local/Qconf \
-#        && cd /home/QConf-1.2.1/driver/php && phpize \
-#        && ./configure --with-php-config=/usr/local/bin/php-config --with-libqconf-dir=/usr/local/Qconf/include --enable-static LDFLAGS=/usr/local/Qconf/lib/libqconf.a \
-#        && make && make install \
-#		&& docker-php-ext-enable qconf
+COPY qconf-1.2.1.tar.gz /home/qconf-1.2.1.tar.gz
+COPY QConf-1.2.1_with_monitor-x86_64.tar.gz /home/QConf-1.2.1_with_monitor-x86_64.tar.gz
+RUN tar -zxf /home/qconf-1.2.1.tar.gz && tar -zxf /home/QConf-1.2.1_with_monitor-x86_64.tar.gz -C /usr/local && mv /usr/local/qconf-1.2.1 /usr/local/Qconf \
+        && cd /home/QConf-1.2.1/driver/php && phpize \
+        && ./configure --with-php-config=/usr/local/bin/php-config --with-libqconf-dir=/usr/local/Qconf/include --enable-static LDFLAGS=/usr/local/Qconf/lib/libqconf.a \
+        && make && make install \
+		&& docker-php-ext-enable qconf
 
 
 
