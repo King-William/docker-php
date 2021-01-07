@@ -1,2 +1,2 @@
 FROM kibana:7.4.0
-MAINTAINER wuyihao <303440188@qq.com>
+MAINTAINER wangwenbin <2281860669@qq.com>

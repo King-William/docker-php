@@ -1,4 +1,4 @@
-FROM php:7.2-fpm
+FROM php:7.4.13-fpm
 MAINTAINER wuyihao <303440188@qq.com>
 
 ARG CHANGE_SOURCE=true
@@ -14,17 +14,17 @@ RUN if [ ${CHANGE_SOURCE} = true ]; then \
 # 更新、安装基础组件
 RUN apt-get update
 RUN apt-get install -y  --allow-remove-essential --allow-downgrades --no-install-recommends \
-    libncurses5 libncursesw5 libtinfo5 libz-dev  zlib1g=1:1.2.8.dfsg-5 \
     procps libpq-dev libfreetype6-dev \
     libjpeg62-turbo-dev libpng-dev  ntpdate \
-    cron vim unzip git wget libzip-dev
+    cron vim unzip git wget libzip-dev \
+    libncurses5 libncursesw5 libtinfo5 libz-dev  zlib1g=1:1.2.8.dfsg-5
 
 
 
 ####################################################################################
 # 安装 PHP 扩展
 ####################################################################################
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
 RUN docker-php-ext-install pdo_mysql gettext bcmath
 
 #################### 方式一
@@ -44,13 +44,13 @@ RUN apt-get install pkg-config librabbitmq-dev
 RUN pecl install amqp
 
 # Swoole
-COPY swoole-4.2.9.tgz /home/swoole.tgz
+COPY swoole-4.6.0.tgz /home/swoole.tgz
 RUN pecl install /home/swoole.tgz \
 		&& docker-php-ext-enable swoole
 
 # Psr
-COPY psr-0.6.1.tgz /home/psr.tgz
-RUN pecl install /home/psr.tgz
+#COPY psr-0.6.1.tgz /home/psr.tgz
+#RUN pecl install /home/psr.tgz
 
 
 #Phalcon
@@ -63,15 +63,37 @@ RUN tar -xvf /home/cphalcon.tgz -C /home \
 
 # Redis
 COPY redis-4.0.0.tgz /home/redis.tgz
-RUN pecl install /home/redis.tgz \ 
+RUN pecl install /home/redis.tgz \
 		&& docker-php-ext-enable redis
 
 
+
+# Qconf
+#COPY qconf-1.2.1.tar.gz /home/qconf-1.2.1.tar.gz
+#COPY QConf-1.2.1_with_monitor-x86_64.tar.gz /home/QConf-1.2.1_with_monitor-x86_64.tar.gz
+#RUN tar -zxf /home/qconf-1.2.1.tar.gz && tar -zxf /home/QConf-1.2.1_with_monitor-x86_64.tar.gz -C /usr/local && mv /usr/local/qconf-1.2.1 /usr/local/Qconf \
+#        && cd /home/QConf-1.2.1/driver/php && phpize \
+#        && ./configure --with-php-config=/usr/local/bin/php-config --with-libqconf-dir=/usr/local/Qconf/include --enable-static LDFLAGS=/usr/local/Qconf/lib/libqconf.a \
+#        && make && make install \
+#		&& docker-php-ext-enable qconf
+
+
+
+#mongodb
+#RUN apt-get install openssl \
+#    && apt-get update \
+#    && apt-get install libssl1.0-dev \
+#    && pecl install mongodb \
+#    && docker-php-ext-enable mongodb
+
+
+
+
 ### php composer
-RUN php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.php');" \     
-		&& php composer-setup.php \     
-		&& php -r "unlink('composer-setup.php');" \       
-		&& mv composer.phar /usr/local/bin/composer \     
+RUN php -r "copy('https://install.phpcomposer.com/installer', 'composer-setup.php');" \
+		&& php composer-setup.php \
+		&& php -r "unlink('composer-setup.php');" \
+		&& mv composer.phar /usr/local/bin/composer \
 		&& composer config -g repo.packagist composer https://mirrors.aliyun.com/composer
 
 
@@ -108,3 +130,7 @@ ENV ENV_PHP_VAR local
 #		&& docker-php-ext-enable geoip
 #RUN mkdir -p /usr/share/GeoIP
 #ADD GeoLiteCity.dat /usr/share/GeoIP/GeoIPCity.dat
+
+
+
+
